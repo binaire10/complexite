@@ -14,23 +14,23 @@ public class TuringMachineMemory<T extends Number> {
     }
 
     public T get(int position) {
-        ensurePosition(position);
+        ensurePosition(position + offset);
         return memory.get(position + offset);
     }
 
     public T set(int position, T value) {
-        ensurePosition(position);
+        ensurePosition(position + offset);
         return memory.set(position + offset, value);
     }
 
     private void ensurePosition(int position) {
-        if (position + offset < 0) {
-            int count = -(position + offset);
+        if (position < 0) {
+            int count = -position;
             offset += count;
             memory.addAll(0, IntStream.range(0, count).mapToObj(i -> (T) null).collect(Collectors.toList()));
         }
-        if (position + offset >= memory.size()) {
-            int count = position + offset + 1 - memory.size();
+        if (position >= memory.size()) {
+            int count = position + 1 - memory.size();
             memory.addAll(IntStream.range(0, count).mapToObj(i -> (T) null).collect(Collectors.toList()));
         }
     }
