@@ -1,7 +1,6 @@
 package fr.univ_amu;
 
-import java.util.Collection;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -55,4 +54,10 @@ public class Math {
                 .allMatch(Set::isEmpty);
     }
 
+    public Collection<Integer> findVerticesWithOneOrLessEdge (Graph graph) {
+        return IntStream.range(0, graph.vertexCount())
+                .filter(i -> graph.getEdge(i).size() <= 1)
+                .boxed()
+                .collect(Collectors.toList());
+    }
 }
