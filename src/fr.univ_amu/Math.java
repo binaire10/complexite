@@ -1,5 +1,10 @@
 package fr.univ_amu;
 
+import java.util.Collection;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 public class Math {
     public static long[][] identityMatrix() {
         return new long[][]{{1, 0}, {0, 1}};
@@ -36,4 +41,18 @@ public class Math {
             return result;
         }
     }
+
+    public static Collection<Integer> getMaxEmptyAreaNode(Graph graph) {
+        return IntStream.range(0, graph.vertexCount())
+                .filter(i -> graph.getEdge(i).isEmpty())
+                .boxed()
+                .collect(Collectors.toList());
+    }
+
+    public boolean isEmptyAreaGraph(Graph graph, Collection<Integer> empty) {
+        return empty.stream()
+                .map(graph::getEdge)
+                .allMatch(Set::isEmpty);
+    }
+
 }
