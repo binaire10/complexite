@@ -16,4 +16,13 @@ class TuringMachineMemoryTest {
         assertEquals(5, memory.get(-10));
         assertEquals(2, memory.get(10));
     }
+
+    @Test
+    void linear() {
+        TuringMachineMemory<Integer> memory = new TuringMachineMemory<>(new ArrayList<>());
+        for (int i = -10; i <= 10; i++)
+            memory.set(i, i);
+        for (int i = -10; i <= 10; i++)
+            assertEquals(i, memory.get(i));
+    }
 }
