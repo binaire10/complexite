@@ -60,4 +60,14 @@ public class Math {
                 .boxed()
                 .collect(Collectors.toList());
     }
+
+    public Set<Integer> getOneMaximaleCliqueFromGraph(Graph graph) {
+        ArrayList<Integer> verticesClique = new ArrayList<>();
+        for (int i = 0; i < graph.vertexCount(); i++) verticesClique.add(i);
+        for(Integer vertice : verticesClique) {
+            Set<Integer> neighbors = graph.getEdge(vertice);
+            verticesClique.removeAll(neighbors);
+        }
+        return new TreeSet<>(verticesClique);
+    }
 }
