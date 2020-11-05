@@ -48,7 +48,7 @@ public class Math {
                 .collect(Collectors.toList());
     }
 
-    public boolean isEmptyAreaGraph(Graph graph, Collection<Integer> empty) {
+    public static boolean isEmptyAreaGraph(Graph graph, Collection<Integer> empty) {
         return empty.stream()
                 .map(graph::getEdge)
                 .allMatch(Set::isEmpty);
@@ -61,13 +61,18 @@ public class Math {
                 .collect(Collectors.toList());
     }
 
-    public Set<Integer> getOneMaximaleCliqueFromGraph(Graph graph) {
-        ArrayList<Integer> verticesClique = new ArrayList<>();
-        for (int i = 0; i < graph.vertexCount(); i++) verticesClique.add(i);
-        for(Integer vertice : verticesClique) {
+    public static Set<Integer> getOneMaximalEmptyZoneFromGraph(Graph graph) {
+        ArrayList<Integer> verticesEmptyZone = new ArrayList<>();
+        ArrayList<Integer> finalList = new ArrayList<>();
+        for (int i = 0; i < graph.vertexCount(); i++) {verticesEmptyZone.add(i); finalList.add(i);}
+        Collections.shuffle(verticesEmptyZone);
+        for(Integer vertice : verticesEmptyZone) {
+            if(!finalList.contains(vertice)) continue;
             Set<Integer> neighbors = graph.getEdge(vertice);
-            verticesClique.removeAll(neighbors);
+            finalList.removeAll(neighbors);
         }
-        return new TreeSet<>(verticesClique);
+        return new TreeSet<>(finalList);
     }
+
+
 }
