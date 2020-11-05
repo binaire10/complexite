@@ -43,20 +43,25 @@ public class Math {
 
     public static Collection<Integer> getMaxEmptyAreaNode(Graph graph) {
         return IntStream.range(0, graph.vertexCount())
-                .filter(i -> graph.getEdge(i).isEmpty())
+                .filter(i -> graph.getEdges(i).isEmpty())
                 .boxed()
                 .collect(Collectors.toList());
     }
 
     public static boolean isEmptyAreaGraph(Graph graph, Collection<Integer> empty) {
-        return empty.stream()
-                .map(graph::getEdge)
-                .allMatch(Set::isEmpty);
+        for (Integer integer : empty) {
+            Set<Integer> neighbors = graph.getEdges(integer);
+            Set<Integer> copySet = new HashSet<>(neighbors);
+            copySet.removeAll(empty);
+            if(copySet.size() != neighbors.size())
+                return false;
+        }
+        return true;
     }
 
     public Collection<Integer> findVerticesWithOneOrLessEdge (Graph graph) {
         return IntStream.range(0, graph.vertexCount())
-                .filter(i -> graph.getEdge(i).size() <= 1)
+                .filter(i -> graph.getEdges(i).size() <= 1)
                 .boxed()
                 .collect(Collectors.toList());
     }
@@ -68,7 +73,7 @@ public class Math {
         Collections.shuffle(verticesEmptyZone);
         for(Integer vertice : verticesEmptyZone) {
             if(!finalList.contains(vertice)) continue;
-            Set<Integer> neighbors = graph.getEdge(vertice);
+            Set<Integer> neighbors = graph.getEdges(vertice);
             finalList.removeAll(neighbors);
         }
         return new TreeSet<>(finalList);

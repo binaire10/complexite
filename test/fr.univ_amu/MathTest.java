@@ -40,10 +40,14 @@ public class MathTest {
         Graph graph = new Graph(9);
         addTestDatasInGraph(graph);
         ArrayList<Integer> emptyArea = new ArrayList<>();
+        emptyArea.add(0);
+        emptyArea.add(3);
+        emptyArea.add(6);
+        assertTrue(Math.isEmptyAreaGraph(graph, emptyArea));
+        emptyArea = new ArrayList<>();
+        graph.addEdge(7,8);
         emptyArea.add(7);
         emptyArea.add(8);
-        assertTrue(Math.isEmptyAreaGraph(graph, emptyArea));
-        graph.addEdge(7,8);
         assertFalse(Math.isEmptyAreaGraph(graph, emptyArea));
     }
 
