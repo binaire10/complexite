@@ -69,15 +69,34 @@ public class Math {
     public static Set<Integer> getOneMaximalEmptyZoneFromGraph(Graph graph) {
         ArrayList<Integer> verticesEmptyZone = new ArrayList<>();
         ArrayList<Integer> finalList = new ArrayList<>();
-        for (int i = 0; i < graph.vertexCount(); i++) {verticesEmptyZone.add(i); finalList.add(i);}
+        for (int i = 0; i < graph.vertexCount(); i++) {
+            verticesEmptyZone.add(i);
+            finalList.add(i);
+        }
         Collections.shuffle(verticesEmptyZone);
-        for(Integer vertice : verticesEmptyZone) {
-            if(!finalList.contains(vertice)) continue;
+        for (Integer vertice : verticesEmptyZone) {
+            if (!finalList.contains(vertice)) continue;
             Set<Integer> neighbors = graph.getEdges(vertice);
             finalList.removeAll(neighbors);
         }
         return new TreeSet<>(finalList);
     }
 
-
+    /**
+     * Exo 4
+     *
+     * @param graph
+     * @return
+     */
+    public static Collection<Integer> getOneMaximumEmptyZoneFromGraph(Graph graph) {
+        DeepFirstSearchIterator iterator = new DeepFirstSearchIterator(graph);
+        Collection<Integer> zoneVide = new LinkedList<>();
+        while (iterator.hasNext()) {
+            int node = iterator.next();
+            if (graph.getEdges(node).stream().anyMatch(zoneVide::contains)) // O(G.V + G.N)
+                continue;
+            zoneVide.add(node);
+        }
+        return zoneVide;
+    }
 }
