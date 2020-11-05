@@ -13,6 +13,7 @@ public class DeepFirstSearchIterator implements Iterator<Integer> {
         frontier = Collections.asLifoQueue(new ArrayDeque<>());
         frontier.add(0);
         visited[0] = true;
+        explore(0);
     }
 
     public DeepFirstSearchIterator(Graph graph, Collection<Integer> frontier) {
@@ -28,13 +29,24 @@ public class DeepFirstSearchIterator implements Iterator<Integer> {
         return !frontier.isEmpty();
     }
 
-    @Override
-    public Integer next() {
-        int vertex = frontier.poll();
-        for (int neighbour : graph.getEdge(vertex))
+    public void explore(int node) {
+        for (int neighbour : graph.getEdges(node))
             if (!visited[neighbour]) {
                 visited[neighbour] = true;
                 frontier.add(neighbour);
+                explore(neighbour);
+            }
+    }
+
+    @Override
+    public Integer next() {
+        int vertex = frontier.poll();
+        for (int i = 0; i < visited.length; i++)
+            if (!visited[i]) {
+                frontier.add(i);
+                visited[i] = true;
+                explore(i);
+                break;
             }
         return vertex;
     }

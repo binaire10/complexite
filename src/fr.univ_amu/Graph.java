@@ -1,9 +1,6 @@
 package fr.univ_amu;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Graph {
     private final List<Set<Integer>> edge;
@@ -20,11 +17,16 @@ public class Graph {
         edge.get(b).add(a);
     }
 
-    public Set<Integer> getEdge(int a) {
-        return edge.get(a);
+    public Set<Integer> getEdges(int a) {
+        return Collections.unmodifiableSet(edge.get(a));
     }
 
     public int vertexCount() {
         return edge.size();
+    }
+
+    public Graph complement() {
+        Graph graph = new Graph(edge.size());
+        return graph;
     }
 }
