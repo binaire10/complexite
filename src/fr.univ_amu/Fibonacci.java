@@ -1,11 +1,11 @@
 package fr.univ_amu;
 
 public class Fibonacci {
-    public static long calculFibonachiRecursive(int n) {
+    public static long calculFibonacciRecursive(int n) {
         if (n == 0) return 0;
         else if (n == 1) return 1;
         else {
-            return calculFibonachiRecursive(n - 1) + calculFibonachiRecursive(n - 2);
+            return calculFibonacciRecursive(n - 1) + calculFibonacciRecursive(n - 2);
         }
     }
 
