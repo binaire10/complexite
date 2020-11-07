@@ -9,14 +9,15 @@ public class Benchmark {
     private PrintWriter write;
 
     public void timeFibonacciIteratif(int n) throws IOException {
-        FileWriter file = new FileWriter("teste.txt");
+        FileWriter file = new FileWriter("test.txt");
         write = new PrintWriter(file);
         start = System.nanoTime();
         Fibonacci.calculFibonacciIteratif(n);
         end = System.nanoTime();
         elapsedTime = end - start;
         System.out.println("Temps d'execution en nanosecondes: "+ elapsedTime);
-        write.printf("test",elapsedTime);
+        write.println(elapsedTime);
+        write.close();
     }
 
     public void timeFibonacciRecursif(int n){
