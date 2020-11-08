@@ -33,6 +33,29 @@ public class ZoneVideMaximal {
     }
 
     @Test
+    public void test3() {
+        Graph graph = new Graph(6);
+        List<Integer> node = IntStream.range(0, graph.vertexCount()).boxed().collect(Collectors.toCollection(ArrayList::new));
+        Collections.shuffle(node);
+        int a = node.get(0);
+        int b = node.get(1);
+        int c = node.get(2);
+        int d = node.get(3);
+        int e = node.get(4);
+        int f = node.get(5);
+        graph.addEdge(b, c);
+        graph.addEdge(b, f);
+        graph.addEdge(b, e);
+        graph.addEdge(e, f);
+        graph.addEdge(c, f);
+        graph.addEdge(c, d);
+
+        Collection<Integer> zoneVideGreedy = Math.getOneMaximumEmptyZoneFromGraphGreedy(graph);
+        System.out.println(zoneVideGreedy);
+        assertTrue(Math.isEmptyAreaGraph(graph, zoneVideGreedy));
+    }
+
+    @Test
     public void test2() {
         Graph graph = new Graph(15);
         List<Integer> node = IntStream.range(0, graph.vertexCount()).boxed().collect(Collectors.toCollection(ArrayList::new));
@@ -72,7 +95,6 @@ public class ZoneVideMaximal {
 
 
         Collection<Integer> zoneVide = Math.getOneMaximumEmptyZoneFromGraph(graph);
-
         System.out.println(Arrays.toString(zoneVide.stream().map(v -> symbole.charAt(node.indexOf(v))).toArray(Character[]::new)));
         assertTrue(Math.isEmptyAreaGraph(graph, zoneVide));
     }

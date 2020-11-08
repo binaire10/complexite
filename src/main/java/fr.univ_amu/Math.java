@@ -92,4 +92,65 @@ public class Math {
         }
         return zoneVide;
     }
+
+    /**
+     * Algorithm 1 Greedy
+     * ref: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.452.5619&rep=rep1&type=pdf
+     * Require: a graph G = (V, E)
+     * ==============================
+     * W ← V
+     * S ← ∅
+     * while W != ∅ do
+     *  Find a vertex v ∈ W with minimum degree in G[W]
+     *  W ← W \ NG[v]
+     *  S ← S ∪ {v}
+     * end while
+     * return S
+     * ==============================
+     * NG[v] = neighbourhood of vertex v and v;
+     * Complexity: O(n/a * n * d(v)) = O(n) with: a: max degree in graph
+     * Question 3 with a complexity of 2 ^ n will of course have greater complexity
+     * when using the greedy algorithm.
+     * Note: Our main result is that Greedy is much better than previously claimed. We obtain a
+     * tight performance ratio of (Δ + 2)/3 in terms of maximum degree, and an asymptotically
+     * optimal bound of (d + 2)/2 in terms of average degree
+     * @param graph
+     * @return zoneVide
+     */
+
+    public static Collection<Integer> getOneMaximumEmptyZoneFromGraphGreedy(Graph graph) {
+        DeepFirstSearchIterator iterator = new DeepFirstSearchIterator(graph);
+        int vertexCount = graph.vertexCount();
+        int[] setVertex = new int[vertexCount]; //W set
+        Arrays.fill(setVertex, 1);
+        Collection<Integer> zoneVide = new LinkedList<>(); //S set
+        int sum = IntStream.of(setVertex).sum();
+        while (sum!=0) {
+            //Find a vertex v ∈ W with minimum degree in G[W]
+            int min = Integer.MAX_VALUE;
+            int index = 0;
+            for(int i = 0; i < vertexCount; i++){ // V times
+                if(setVertex[i]==1) {
+                    Set<Integer> edges = graph.getEdges(i);
+                    int degree = 0;
+                    for (int vertex: edges) { // < max: d(V) times
+                        if(setVertex[vertex] == 1) degree++;
+                    }
+                    if (degree < min) {
+                        min = degree;
+                        index = i;
+                    }
+                }
+            }
+            // W ← W \ NG[v]
+            setVertex[index] = 0;
+            for (int a : graph.getEdges(index)) {
+                setVertex[a] = 0;
+            }
+            // S ← S ∪ {v}
+            zoneVide.add(index);
+            sum = IntStream.of(setVertex).sum();
+        }
+        return zoneVide;
+    }
 }
