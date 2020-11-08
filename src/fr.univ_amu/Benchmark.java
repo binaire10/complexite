@@ -1,8 +1,10 @@
 package fr.univ_amu;
 
-import java.io.*;
-import java.util.function.*;
-import java.util.stream.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.function.IntConsumer;
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 public class Benchmark {
     private static long benchmark(int value, int repeat, IntConsumer consumer) {
@@ -16,24 +18,24 @@ public class Benchmark {
         return best;
     }
     public static void main(String[] args) throws IOException {
-        long[] result = new long[92];
+        long[] result = new long[1000];
         FileWriter resultFile = new FileWriter("result.csv");
         resultFile.write(IntStream.rangeClosed(1, result.length).mapToObj(Integer::toString).reduce((a, b) -> a + ';' + b).get());
         resultFile.write('\n');
-        for (int i = 0; i < Integer.min(result.length, 11); i++)
-            result[i] = benchmark(i+1, 10, Fibonacci::calculFibonacciRecursive);
+        for (int i = 0; i < Integer.min(result.length, 40); i++)
+            result[i] = benchmark(i + 1, 100, Fibonacci::calculFibonachiRecursive);
 
-        resultFile.write(LongStream.of(result).limit(Integer.min(result.length, 11)).mapToObj(Long::toString).reduce((a, b) -> a + ';' + b).get());
+        resultFile.write(LongStream.of(result).limit(Integer.min(result.length, 40)).mapToObj(Long::toString).reduce((a, b) -> a + ';' + b).get());
         resultFile.write('\n');
 
         for (int i = 0; i < result.length; i++)
-            result[i] = benchmark(i+1, 10_000, Fibonacci::calculFibonacciIteratif);
+            result[i] = benchmark(i + 1, 800, Fibonacci::calculFibonacciIteratif);
 
         resultFile.write(LongStream.of(result).mapToObj(Long::toString).reduce((a, b) -> a + ';' + b).get());
         resultFile.write('\n');
 
         for (int i = 0; i < result.length; i++)
-            result[i] = benchmark(i+1, 100_000, Fibonacci::calculFibonacciMatrice);
+            result[i] = benchmark(i + 1, 800, Fibonacci::calculFibonacciMatrice);
 
         resultFile.write(LongStream.of(result).mapToObj(Long::toString).reduce((a, b) -> a + ';' + b).get());
         resultFile.write('\n');
