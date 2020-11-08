@@ -3,6 +3,10 @@ package fr.univ_amu;
 import java.util.List;
 
 public class TuringMachine<T extends Number> {
+    public static <A> A blank() {
+        return null;
+    }
+
     private final TuringMachineMemory<T> band;
     private final int initialPosition;
     private int position;
