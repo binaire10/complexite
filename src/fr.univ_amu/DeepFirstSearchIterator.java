@@ -1,6 +1,9 @@
 package fr.univ_amu;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Queue;
 
 public class DeepFirstSearchIterator implements Iterator<Integer> {
     private final boolean[] visited;
@@ -14,14 +17,6 @@ public class DeepFirstSearchIterator implements Iterator<Integer> {
         frontier.add(0);
         visited[0] = true;
         explore(0);
-    }
-
-    public DeepFirstSearchIterator(Graph graph, Collection<Integer> frontier) {
-        this.graph = graph;
-        visited = new boolean[graph.vertexCount()];
-        this.frontier = Collections.asLifoQueue(new ArrayDeque<>());
-        for (int i : this.frontier)
-            visited[i] = true;
     }
 
     @Override
