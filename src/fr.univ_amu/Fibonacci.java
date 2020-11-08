@@ -1,23 +1,24 @@
 package fr.univ_amu;
 
+import java.math.BigInteger;
+
 public class Fibonacci {
-    public static long calculFibonacciRecursive(int n) {
-        if (n == 0) return 0;
-        else if (n == 1) return 1;
+    public static BigInteger calculFibonachiRecursive(int n) {
+        if (n == 0) return BigInteger.ZERO;
+        else if (n == 1) return BigInteger.ONE;
         else {
-            return calculFibonacciRecursive(n - 1) + calculFibonacciRecursive(n - 2);
+            return calculFibonachiRecursive(n - 1).add(calculFibonachiRecursive(n - 2));
         }
     }
 
-    public static long calculFibonacciIteratif(int n) {
-        if (n == 0) return 0;
-        else if (n == 1) return 1;
+    public static BigInteger calculFibonacciIteratif(int n) {
+        if (n == 0) return BigInteger.ZERO;
+        else if (n == 1) return BigInteger.ONE;
         else {
-            long a = 0;
-            long b = 1;
-            long temp = 0;
+            BigInteger a = BigInteger.ZERO;
+            BigInteger b = BigInteger.ONE;
             for (int i = 0; i < n - 1; i++) {
-                temp = a + b;
+                BigInteger temp = a.add(b);
                 a = b;
                 b = temp;
             }
@@ -25,8 +26,8 @@ public class Fibonacci {
         }
     }
 
-    public static long calculFibonacciMatrice(int n) {
-        long[][] fibonacci = {{0, 1}, {1, 1}};
+    public static BigInteger calculFibonacciMatrice(int n) {
+        BigInteger[][] fibonacci = {{BigInteger.ZERO, BigInteger.ONE}, {BigInteger.ONE, BigInteger.ONE}};
         fibonacci = Math.powerMatrix(fibonacci, n);
         return fibonacci[0][1];
     }

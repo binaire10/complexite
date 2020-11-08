@@ -1,44 +1,37 @@
 package fr.univ_amu;
 
+import java.math.BigInteger;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Math {
-    public static long[][] identityMatrix() {
-        return new long[][]{{1, 0}, {0, 1}};
+    public static BigInteger[][] identityMatrix() {
+        return new BigInteger[][]{{BigInteger.ONE, BigInteger.ZERO}, {BigInteger.ZERO, BigInteger.ONE}};
     }
 
-    public static long[][] multipleMatrix(long[][] matrix1, long[][] matrix2, int n) {
-        long[][] result = new long[n][n];
+    public static BigInteger[][] multipleMatrix(BigInteger[][] matrix1, BigInteger[][] matrix2, int n) {
+        BigInteger[][] result = new BigInteger[n][n];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                result[i][j] = 0;
-            }
-        }
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
+                result[i][j] = BigInteger.ZERO;
                 for (int k = 0; k < n; k++) {
-                    result[i][j] += matrix1[i][k] * matrix2[k][j];
+                    result[i][j] = result[i][j].add(matrix1[i][k].multiply(matrix2[k][j]));
                 }
             }
         }
         return result;
     }
 
-    public static long[][] powerMatrix(long[][] matrix, int n) {
+    public static BigInteger[][] powerMatrix(BigInteger[][] matrix, int n) {
         int length = matrix[0].length;
-        if (n == 0) {
-            return identityMatrix();
+        BigInteger[][] result = identityMatrix();
+        while (n != 0) {
+            if ((n & 1) == 1) result = multipleMatrix(result, matrix, length);
+            n /= 2;
+            matrix = multipleMatrix(matrix, matrix, length);
         }
-
-        long[][] result = powerMatrix(matrix, n / 2);
-        if (n % 2 == 0) return multipleMatrix(result, result, length);
-        else {
-            result = multipleMatrix(result, result, length);
-            result = multipleMatrix(result, matrix, length);
-            return result;
-        }
+        return result;
     }
 
     public static Collection<Integer> getMaxEmptyAreaNode(Graph graph) {
@@ -53,13 +46,13 @@ public class Math {
             Set<Integer> neighbors = graph.getEdges(integer);
             Set<Integer> copySet = new HashSet<>(neighbors);
             copySet.removeAll(empty);
-            if(copySet.size() != neighbors.size())
+            if (copySet.size() != neighbors.size())
                 return false;
         }
         return true;
     }
 
-    public Collection<Integer> findVerticesWithOneOrLessEdge (Graph graph) {
+    public Collection<Integer> findVerticesWithOneOrLessEdge(Graph graph) {
         return IntStream.range(0, graph.vertexCount())
                 .filter(i -> graph.getEdges(i).size() <= 1)
                 .boxed()
