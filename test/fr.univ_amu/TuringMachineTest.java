@@ -10,9 +10,9 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class TuringMachineTest {
+public class TuringMachineTest {
     @Test
-    void test_an() {
+    public void test_an() {
         Map<Integer, ProgramEdge<Integer>> node1Edge = new HashMap<>();
         ProgramNode<Integer> node1 = new ProgramNode<>(false, node1Edge);
         ProgramNode<Integer> node2 = new ProgramNode<>(true, Collections.emptyMap());
@@ -25,7 +25,7 @@ class TuringMachineTest {
     }
 
     @Test
-    void test_anbn() {
+    public void test_anbn() {
         Map<Integer, ProgramEdge<Integer>> node1Edge = new HashMap<>();
         Map<Integer, ProgramEdge<Integer>> rAEdge = new HashMap<>();
         Map<Integer, ProgramEdge<Integer>> rBEdge = new HashMap<>();

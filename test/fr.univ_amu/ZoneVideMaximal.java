@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ZoneVideMaximal {
     @Test
-    void test() {
+    public void test() {
         Graph graph = new Graph(6);
         List<Integer> node = IntStream.range(0, graph.vertexCount()).boxed().collect(Collectors.toCollection(ArrayList::new));
         Collections.shuffle(node);
@@ -33,10 +33,10 @@ public class ZoneVideMaximal {
     }
 
     @Test
-    void test2() {
-        Graph graph = new Graph(10);
+    public void test2() {
+        Graph graph = new Graph(15);
         List<Integer> node = IntStream.range(0, graph.vertexCount()).boxed().collect(Collectors.toCollection(ArrayList::new));
-//        Collections.shuffle(node);
+        Collections.shuffle(node);
         String symbole = "abcdefghijklmnopqrstuvwxyz";
         int a = node.get(0);
         int b = node.get(1);
@@ -48,6 +48,11 @@ public class ZoneVideMaximal {
         int h = node.get(7);
         int i = node.get(8);
         int j = node.get(9);
+        int k = node.get(10);
+        int l = node.get(11);
+        int m = node.get(12);
+        int n = node.get(13);
+        int o = node.get(14);
         graph.addEdge(a, b);
         graph.addEdge(c, d);
         graph.addEdge(d, e);
@@ -57,11 +62,18 @@ public class ZoneVideMaximal {
         graph.addEdge(g, h);
         graph.addEdge(d, h);
         graph.addEdge(j, h);
+        graph.addEdge(i, o);
+        graph.addEdge(i, k);
+        graph.addEdge(l, k);
+        graph.addEdge(l, m);
+        graph.addEdge(n, m);
+        graph.addEdge(n, o);
+        graph.addEdge(j, k);
 
 
         Collection<Integer> zoneVide = Math.getOneMaximumEmptyZoneFromGraph(graph);
 
-        System.out.println(Arrays.toString(zoneVide.stream().map(n -> symbole.charAt(node.indexOf(n))).toArray(Character[]::new)));
+        System.out.println(Arrays.toString(zoneVide.stream().map(v -> symbole.charAt(node.indexOf(v))).toArray(Character[]::new)));
         assertTrue(Math.isEmptyAreaGraph(graph, zoneVide));
     }
 }

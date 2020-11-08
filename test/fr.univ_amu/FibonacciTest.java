@@ -6,7 +6,7 @@ import java.math.BigInteger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class FibonacciTest {
+public class FibonacciTest {
     @Test
     public void test_fibo() {
         for (int i = 0; i < 500; i++) {

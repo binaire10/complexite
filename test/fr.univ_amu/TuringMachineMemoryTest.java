@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class TuringMachineMemoryTest {
+public class TuringMachineMemoryTest {
 
     @Test
-    void get() {
+    public void get() {
         TuringMachineMemory<Integer> memory = new TuringMachineMemory<>(new ArrayList<>());
         memory.set(-10, 5);
         memory.set(10, 2);
@@ -18,7 +18,7 @@ class TuringMachineMemoryTest {
     }
 
     @Test
-    void linear() {
+    public void linear() {
         TuringMachineMemory<Integer> memory = new TuringMachineMemory<>(new ArrayList<>());
         for (int i = -10; i <= 10; i++)
             memory.set(i, i);
