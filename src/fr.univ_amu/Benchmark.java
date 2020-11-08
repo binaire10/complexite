@@ -22,20 +22,20 @@ public class Benchmark {
         FileWriter resultFile = new FileWriter("result.csv");
         resultFile.write(IntStream.rangeClosed(1, result.length).mapToObj(Integer::toString).reduce((a, b) -> a + ';' + b).get());
         resultFile.write('\n');
-        for (int i = 0; i < Integer.min(result.length, 40); i++)
-            result[i] = benchmark(i + 1, 100, Fibonacci::calculFibonachiRecursive);
+        for (int i = 0; i < Integer.min(result.length, 18); i++)
+            result[i] = benchmark(i + 1, 10000, Fibonacci::calculFibonachiRecursive);
 
-        resultFile.write(LongStream.of(result).limit(Integer.min(result.length, 40)).mapToObj(Long::toString).reduce((a, b) -> a + ';' + b).get());
+        resultFile.write(LongStream.of(result).limit(Integer.min(result.length, 18)).mapToObj(Long::toString).reduce((a, b) -> a + ';' + b).get());
         resultFile.write('\n');
 
         for (int i = 0; i < result.length; i++)
-            result[i] = benchmark(i + 1, 800, Fibonacci::calculFibonacciIteratif);
+            result[i] = benchmark(i + 1, 10000, Fibonacci::calculFibonacciIteratif);
 
         resultFile.write(LongStream.of(result).mapToObj(Long::toString).reduce((a, b) -> a + ';' + b).get());
         resultFile.write('\n');
 
         for (int i = 0; i < result.length; i++)
-            result[i] = benchmark(i + 1, 800, Fibonacci::calculFibonacciMatrice);
+            result[i] = benchmark(i + 1, 10000, Fibonacci::calculFibonacciMatrice);
 
         resultFile.write(LongStream.of(result).mapToObj(Long::toString).reduce((a, b) -> a + ';' + b).get());
         resultFile.write('\n');
