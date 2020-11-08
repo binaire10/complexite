@@ -1,5 +1,6 @@
 package fr.univ_amu;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -10,7 +11,7 @@ public class TuringMachineMemory<T extends Number> {
 
     public TuringMachineMemory(List<T> memory) {
         offset = 0;
-        this.memory = memory;
+        this.memory = new ArrayList<>(memory);
     }
 
     public T get(int position) {
