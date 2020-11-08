@@ -1,39 +1,42 @@
 package fr.univ_amu;
 
 import java.io.*;
+import java.util.function.*;
+import java.util.stream.*;
 
 public class Benchmark {
-    private long start;
-    private long end;
-    private long elapsedTime;
-    private PrintWriter write;
-
-    public void timeFibonacciIteratif(int n) throws IOException {
-        FileWriter file = new FileWriter("test.txt");
-        write = new PrintWriter(file);
-        start = System.nanoTime();
-        Fibonacci.calculFibonacciIteratif(n);
-        end = System.nanoTime();
-        elapsedTime = end - start;
-        System.out.println("Temps d'execution en nanosecondes: "+ elapsedTime);
-        write.println(elapsedTime);
-        write.close();
+    private static long benchmark(int value, int repeat, IntConsumer consumer) {
+        long best = Integer.MAX_VALUE;
+        for (int i = 0; i < repeat; i++) {
+            long start = System.nanoTime();
+            consumer.accept(value);
+            long end = System.nanoTime();
+            best = Long.min(best, end - start);
+        }
+        return best;
     }
+    public static void main(String[] args) throws IOException {
+        long[] result = new long[92];
+        FileWriter resultFile = new FileWriter("result.csv");
+        resultFile.write(IntStream.rangeClosed(1, result.length).mapToObj(Integer::toString).reduce((a, b) -> a + ';' + b).get());
+        resultFile.write('\n');
+        for (int i = 0; i < Integer.min(result.length, 11); i++)
+            result[i] = benchmark(i+1, 10, Fibonacci::calculFibonacciRecursive);
 
-    public void timeFibonacciRecursif(int n){
-        start = System.currentTimeMillis();
-        Fibonacci.calculFibonacciRecursive(n);
-        end = System.currentTimeMillis();
-        elapsedTime = end - start;
-        System.out.println("Temps d'execution en millisecondes: "+ elapsedTime);
+        resultFile.write(LongStream.of(result).limit(Integer.min(result.length, 11)).mapToObj(Long::toString).reduce((a, b) -> a + ';' + b).get());
+        resultFile.write('\n');
+
+        for (int i = 0; i < result.length; i++)
+            result[i] = benchmark(i+1, 10_000, Fibonacci::calculFibonacciIteratif);
+
+        resultFile.write(LongStream.of(result).mapToObj(Long::toString).reduce((a, b) -> a + ';' + b).get());
+        resultFile.write('\n');
+
+        for (int i = 0; i < result.length; i++)
+            result[i] = benchmark(i+1, 100_000, Fibonacci::calculFibonacciMatrice);
+
+        resultFile.write(LongStream.of(result).mapToObj(Long::toString).reduce((a, b) -> a + ';' + b).get());
+        resultFile.write('\n');
+        resultFile.close();
     }
-
-    public void timeFibonacciMatrix(int n){
-        start = System.currentTimeMillis();
-        Fibonacci.calculFibonacciMatrice(n);
-        end = System.currentTimeMillis();
-        elapsedTime = end - start;
-        System.out.println("Temps d'execution en millisecondes: "+ elapsedTime);
-    }
-
 }
