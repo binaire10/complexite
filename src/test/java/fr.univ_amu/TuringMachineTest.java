@@ -45,7 +45,7 @@ public class TuringMachineTest {
         rAEdge.put(TuringMachine.blank(), new ProgramEdge<>(TuringMachine.Action.Left, comeBack, TuringMachine.blank()));
         rAEdge.put((int) 'b', new ProgramEdge<>(TuringMachine.Action.Right, rA, (int) 'b'));
 
-        comeBackEdge.put((int) 'b', new ProgramEdge<>(TuringMachine.Action.Left, rB, null));
+        comeBackEdge.put((int) 'b', new ProgramEdge<>(TuringMachine.Action.Left, rB, TuringMachine.blank()));
 
         rBEdge.put((int) 'b', new ProgramEdge<>(TuringMachine.Action.Left, rB, (int) 'b'));
         rBEdge.put(TuringMachine.blank(), new ProgramEdge<>(TuringMachine.Action.Right, begin, TuringMachine.blank()));
